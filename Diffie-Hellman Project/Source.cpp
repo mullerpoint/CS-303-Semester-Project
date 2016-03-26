@@ -25,7 +25,8 @@
 //standard library includes
 #include <iostream> //default include for functionality
 #include <string> //get extended string functionality
-
+#include <math.h> //get math functionality for large numbers and complex stuff
+#include "key_party.h" //class for Alice and Bob objects
 #endif
 ////
 
@@ -36,7 +37,7 @@
 
 
 //Function Prototypes
-
+unsigned long findPrime();
 ////
 
 
@@ -48,7 +49,21 @@
 
 int main()
 {
+	//get two primes
+	
+	//alice and bob must share the primes
 
+	//they each add their secret sauce
+
+	//compute mod
+
+	//share results
+
+	//add their secret sauce again (the others results)
+
+	//compute mod
+
+	//
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -58,9 +73,17 @@ int main()
 ////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////
-//Function 1
+//Find Prime
 ////////////////////////////////////////////////////////////////////////////////////////
-
+unsigned long findPrime()
+{
+	while (true)
+	{
+		int r = rand();
+		if (r == isPrime())
+			return 
+	}
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
