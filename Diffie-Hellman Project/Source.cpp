@@ -29,7 +29,7 @@
 #include <array> //array for array of primes
 #include <sstream> //convert from hex to dec
 
-
+//user defined includes
 #include "key_party.h" //class for Alice and Bob objects
 #endif
 ////
@@ -38,6 +38,7 @@
 //Global variables and defines
 
 //array of primes used in the Diffie-Hellman key exchange in Hex
+//these primes were taken from RFC 3526
 std::array<std::string, 6> primes
 {
 	{"FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD129024E088A67CC74020BBEA63B139B22514A08798E3404DDEF9519B3CD3A431B302B0A6DF25F14374FE1356D6D51C245E485B576625E7EC6F44C42E9A637ED6B0BFF5CB6F406B7EDEE386BFB5A899FA5AE9F24117C4B1FE649286651ECE45B3DC2007CB8A163BF0598DA48361C55D39A69163FA8FD24CF5F83655D23DCA3AD961C62F356208552BB9ED529077096966D670C354E4ABC9804F1746C08CA237327FFFFFFFFFFFFFFFF" ,
@@ -51,7 +52,7 @@ std::array<std::string, 6> primes
 
 
 //Function Prototypes
-unsigned long findPrime();
+int printMenu();
 ////
 
 
@@ -63,9 +64,33 @@ unsigned long findPrime();
 
 int main()
 {
+	//create initial variables
+		//create two objects that will generate keys
+		key_party alice, bob;
+		//create menu input variable
+		std::string input;
 	//get two primes
-	
+		//ask the user what bit size prime they would like to use
+		printMenu();
+
+		//perform input validation
+		while (input.empty()) //check if the string is empty (true on first pass)
+		{
+			std::cin >> input; //store user entry in input
+			if (isdigit(input[0]))
+			{
+
+			}//if
+			else
+			{
+				input.clear();
+			}//else
+		}//while
+		
+		//perform conversion from str to int
+
 	//alice and bob must share the primes
+
 
 	//they each add their secret sauce
 
@@ -78,7 +103,9 @@ int main()
 	//compute mod
 
 	//
-}
+
+
+}// end main
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -87,16 +114,18 @@ int main()
 ////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////
-//Find Prime
+//Print Menu
 ////////////////////////////////////////////////////////////////////////////////////////
-unsigned long findPrime()
+int printMenu()
 {
-	while (true)
-	{
-		int r = rand();
-		if (r == isPrime())
-			return 
-	}
+	std::cout << std::endl
+		<< "0 -> 1536-bit MODP Group" << std::endl
+		<< "1 -> 2048-bit MODP Group" << std::endl
+		<< "2 -> 3072-bit MODP Group" << std::endl
+		<< "3 -> 4096-bit MODP Group" << std::endl
+		<< "4 -> 6144-bit MODP Group" << std::endl
+		<< "5 -> 8192-bit MODP Group" << std::endl << std::endl;
+
 }
 
 
