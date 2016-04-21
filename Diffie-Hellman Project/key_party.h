@@ -5,7 +5,7 @@
 #ifndef BOOST_LIBRARIES_H_
 #define BOOST_LIBRARIES_H_
 #include <boost/multiprecision/cpp_int.hpp> //Boost Multiprecision Library from the Boost 1.60 libraries
-//used for manipulating arbitrarily large numbers 
+											//used for manipulating arbitrarily large numbers 
 #endif
 
 #pragma once
