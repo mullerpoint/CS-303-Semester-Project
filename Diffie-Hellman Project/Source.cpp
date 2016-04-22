@@ -77,69 +77,74 @@ int printMenu();
 int main()
 {
 	//create initial variables
-	//create two objects that will generate keys
-	key_party alice, bob;
-	//Create public prime for modding purposes 
-	int basePrime = 2;
-	//Create secret numbers
-	alice.setPrivateNum(3);
-	bob.setPrivateNum(5);
-	//create menu input variable
-	int input = NULL;
-	std::string input_str = "";
-	//get two primes
+		//create two objects that will generate keys
+		key_party alice, bob;
+		//Create public prime for modding purposes 
+		int basePrime = 2;
+		//Create secret numbers
+		alice.setPrivateNum(3);
+		bob.setPrivateNum(5);
+		//create menu input variable
+		int input = NULL;
+		std::string input_str = "";
+	
 	//ask the user what bit size prime they would like to use
-	printMenu();
+		std::cout << "This is a proof of concept Diffie-Hellman Exchange Program written by Gary Muller and Ian Powers" << std::endl;
 
-	//perform input validation
-	while (input_str == "") //check if the input is empty (true on first pass)
-	{
-		std::cin >> input_str; //store user entry in input
-		input = stoi(input_str);
-		if ((input < 0) || (input > 5))
+		printMenu();
+
+		while (true)
 		{
-			//return error to user ask for input again
-			std::cout << "please only input values specified from the menu above" << std::endl;
-			input = NULL;
-			input_str = "";
-		}//if
-	}//while
+			//perform input validation
+			while (input_str == "") //check if the input is empty (true on first pass)
+			{
+				std::cout << "Choise: ";
+				std::cin >> input_str; //store user entry in input
+				input = stoi(input_str);
+				if ((input < 0) || (input > 5))
+				{
+					//return error to user ask for input again
+					std::cout << "Please only input values specified from the menu above" << std::endl;
+					input = NULL;
+					input_str = "";
+				}//if
+			}// 
+		}
 
 	//perform conversion from str to int
 	boost::multiprecision::cpp_int chosenPrime(primes[input]);
 	//common variable that will hold a representation of one(1) of the prime hex strings
 
-	//TESTING
-	std::cout << chosenPrime << std::endl;
-
-
+	
 	//they each add their secret sauce
-	alice.generate_exchange(chosenPrime, basePrime, alice.getPrivateNum(), false);
-	bob.generate_exchange(chosenPrime, basePrime, bob.getPrivateNum(), false);
+		alice.generate_exchange(chosenPrime, basePrime, false);
+		bob.generate_exchange(chosenPrime, basePrime, false);
 
 	//print results of first generation
-	std::cout << "Alice's initial key:" << std::endl << alice.getInitialKey() << std::endl;
-	std::cout << "Bob's initial key:" << std::endl << bob.getInitialKey() << std::endl;
+		std::cout << "Alice's initial key:" << std::endl << alice.getInitialKey() << std::endl;
+		std::cout << "Bob's initial key:" << std::endl << bob.getInitialKey() << std::endl;
 
 	//share results
-	alice.setcounterpartIKey(bob.getInitialKey()); //set alice's counterpart key to bob's initial key
-	bob.setcounterpartIKey(alice.getInitialKey()); //set bob's counterpart key to alice's initial key
+		alice.setcounterpartIKey(bob.getInitialKey()); //set alice's counterpart key to bob's initial key
+		bob.setcounterpartIKey(alice.getInitialKey()); //set bob's counterpart key to alice's initial key
+	
 	//add their secret sauce again (the others results)
-	alice.generate_exchange(chosenPrime, alice.getCounterpartKey(), alice.getPrivateNum(), true);
-	bob.generate_exchange(chosenPrime, bob.getCounterpartKey(), bob.getPrivateNum(), true);
+		alice.generate_exchange(chosenPrime, alice.getCounterpartKey(), true);
+		bob.generate_exchange(chosenPrime, bob.getCounterpartKey(), true);
 
 	//print results of seccond generation
-	std::cout << "Alice's final key:" << std::endl << alice.getFinalKey() << std::endl;
-	std::cout << "Bob's final key:" << std::endl << bob.getFinalKey() << std::endl;
+		std::cout << "Alice's final key:" << std::endl << alice.getFinalKey() << std::endl;
+		std::cout << "Bob's final key:" << std::endl << bob.getFinalKey() << std::endl;
 
-	if (alice.getFinalKey() == bob.getFinalKey())
-	{
-		std::cout << "Success: The Keys Match" << std::endl;
-	}
-	else
-	{
-		std::cout << "Failure: The Keys Dont Match" << std::endl;
-	}
+	//Compare Results
+		if (alice.getFinalKey() == bob.getFinalKey())
+		{
+			std::cout << "Success: The Keys Match" << std::endl;
+		}
+		else
+		{
+			std::cout << "Failure: The Keys Dont Match" << std::endl;
+		}
 
 
 }// end main
@@ -156,6 +161,7 @@ int main()
 int printMenu()
 {
 	std::cout << std::endl
+		<< "Please Select which MODP Group you would like to use: " << std::endl
 		<< "0 -> 1536-bit MODP Group" << std::endl
 		<< "1 -> 2048-bit MODP Group" << std::endl
 		<< "2 -> 3072-bit MODP Group" << std::endl
@@ -165,8 +171,3 @@ int printMenu()
 
 	return 1;
 }
-
-
-////////////////////////////////////////////////////////////////////////////////////////
-//Function 2
-////////////////////////////////////////////////////////////////////////////////////////
