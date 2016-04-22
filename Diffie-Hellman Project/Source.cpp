@@ -15,18 +15,10 @@
 //Header files - Standard libraries and classes
 #ifndef CORE_DEPENDENCIES_H_
 #define CORE_DEPENDENCIES_H_
-//OS Specific Includes
-#ifdef __linux__ 
-//linux specific includes
-#elif _WIN32
-// windows specific includes
-#endif
-
 
 //standard library includes
 #include <iostream> //default include for functionality
 #include <string> //get extended string functionality
-#include <math.h> //get math functionality for large numbers and complex stuff
 #include <array> //array for array of primes
 #include <sstream> //convert from hex to dec
 
@@ -34,6 +26,7 @@
 #define BOOST_LIBRARIES_H_
 #include <boost/multiprecision/cpp_int.hpp> //Boost Multiprecision Library from the Boost 1.60 libraries
 											//used for manipulating arbitrarily large numbers 
+#include <boost/random.hpp> //boost library for random numbers
 #endif
 
 //user defined includes
@@ -76,14 +69,22 @@ int printMenu();
 
 int main()
 {
+	//testing
+	std::cout << (2 ^ 3);
+	
 	//create initial variables
 		//create two objects that will generate keys
 		key_party alice, bob;
 		//Create public prime for modding purposes 
 		int basePrime = 2;
 		//Create secret numbers
-		alice.setPrivateNum(3);
-		bob.setPrivateNum(5);
+			//define a generator for creating random private numbers
+			typedef boost::random::independent_bits_engine<boost::random::mt19937, 128, boost::multiprecision::cpp_int> generator_type;
+			generator_type gen;
+
+			//use the generator to set the private numbers of bob and alice
+			alice.setPrivateNum(gen());
+			bob.setPrivateNum(gen());
 		//create menu input variable
 		int input = NULL;
 		std::string input_str = "";
@@ -93,26 +94,26 @@ int main()
 
 		printMenu();
 
-		while (true)
+		
+		//perform input validation
+		while (input_str == "") //check if the input is empty (true on first pass)
 		{
-			//perform input validation
-			while (input_str == "") //check if the input is empty (true on first pass)
+			std::cout << "Selection: ";
+			std::cin >> input_str; //store user entry in input
+			input = stoi(input_str);
+			if ((input < 0) || (input > 5))
 			{
-				std::cout << "Choise: ";
-				std::cin >> input_str; //store user entry in input
-				input = stoi(input_str);
-				if ((input < 0) || (input > 5))
-				{
-					//return error to user ask for input again
-					std::cout << "Please only input values specified from the menu above" << std::endl;
-					input = NULL;
-					input_str = "";
-				}//if
-			}// 
-		}
+				//return error to user ask for input again
+				std::cout << "Please only input values specified from the menu above" << std::endl;
+				input = NULL;
+				input_str = "";
+			}//if
+		}// 
+		
 
 	//perform conversion from str to int
 	boost::multiprecision::cpp_int chosenPrime(primes[input]);
+	std::cout << "prime read in   ";
 	//common variable that will hold a representation of one(1) of the prime hex strings
 
 	

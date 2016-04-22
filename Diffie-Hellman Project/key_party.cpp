@@ -5,28 +5,19 @@
 //Header files - Standard libraries and classes
 #ifndef CORE_DEPENDENCIES_H_
 #define CORE_DEPENDENCIES_H_
-//OS Specific Includes
-#ifdef __linux__ 
-//linux specific includes
-#elif _WIN32
-// windows specific includes
-#endif
-
 
 //standard library includes
 #include <iostream> //default include for functionality
 #include <string> //get extended string functionality
-#include <math.h> //get math functionality for large numbers and complex stuff
 #include <array> //array for array of primes
 #include <sstream> //convert from hex to dec
-
 
 #ifndef BOOST_LIBRARIES_H_
 #define BOOST_LIBRARIES_H_
 #include <boost/multiprecision/cpp_int.hpp> //Boost Multiprecision Library from the Boost 1.60 libraries
 											//used for manipulating arbitrarily large numbers 
+#include <boost/random.hpp> //boost library for random numbers
 #endif
-
 
 //user defined includes
 #include "key_party.h" //class for Alice and Bob objects
@@ -92,12 +83,11 @@ boost::multiprecision::cpp_int key_party::generate_exchange(boost::multiprecisio
 {
 	//copmute exchange value
 	boost::multiprecision::cpp_int exchangeValue;
-	exchangeValue = (basePrime^privateNum_) % modPrime;
-
+	exchangeValue =  powm(basePrime, privateNum_, modPrime);
 	if (finalFlag) //check to see if this is to generate final or initial key values
-		setFinalKey(finalkey_); // = exchangeValue;
+		setFinalKey(exchangeValue); // = exchangeValue;
 	else
-		setInitialKey(initialkey_); // = exchangeValue;
+		setInitialKey(exchangeValue); // = exchangeValue;
 
 	return 0; //0 shows its not working
 }
@@ -132,7 +122,3 @@ boost::multiprecision::cpp_int key_party::getPrivateNum()
 {
 	return key_party::privateNum_;
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Predicate Functions
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
