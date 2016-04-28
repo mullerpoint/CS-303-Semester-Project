@@ -68,10 +68,7 @@ int printMenu();
 ////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
-{
-	//testing
-	std::cout << (2 ^ 3);
-	
+{	
 	//create initial variables
 		//create two objects that will generate keys
 		key_party alice, bob;
