@@ -79,17 +79,14 @@ int key_party::setFinalKey(boost::multiprecision::cpp_int key)
 }
 
 //perform the actual math for the exchange
-boost::multiprecision::cpp_int key_party::generate_exchange(boost::multiprecision::cpp_int modPrime, boost::multiprecision::cpp_int basePrime, bool finalFlag)
+boost::multiprecision::cpp_int key_party::generate_exchange(boost::multiprecision::cpp_int modPrime, boost::multiprecision::cpp_int basePrime)
 {
 	//copmute exchange value
 	boost::multiprecision::cpp_int exchangeValue;
-	exchangeValue =  powm(basePrime, privateNum_, modPrime);
-	if (finalFlag) //check to see if this is to generate final or initial key values
-		setFinalKey(exchangeValue); // = exchangeValue;
-	else
-		setInitialKey(exchangeValue); // = exchangeValue;
+	exchangeValue = powm(basePrime, privateNum_, modPrime);
 
-	return 0; //0 shows its not working
+	//return exchange value
+	return exchangeValue;
 }
 
 

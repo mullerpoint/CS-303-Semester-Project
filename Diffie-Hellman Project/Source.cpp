@@ -114,8 +114,8 @@ int main()
 
 	
 	//they each add their secret sauce
-		alice.generate_exchange(chosenPrime, basePrime, false);
-		bob.generate_exchange(chosenPrime, basePrime, false);
+		alice.setInitialKey(alice.generate_exchange(chosenPrime, basePrime));
+		bob.setInitialKey(bob.generate_exchange(chosenPrime, basePrime));
 
 	//print results of first generation
 		std::cout << "Alice's initial key:" << std::endl << alice.getInitialKey() << std::endl;
@@ -126,8 +126,8 @@ int main()
 		bob.setcounterpartIKey(alice.getInitialKey()); //set bob's counterpart key to alice's initial key
 	
 	//add their secret sauce again (the others results)
-		alice.generate_exchange(chosenPrime, alice.getCounterpartKey(), true);
-		bob.generate_exchange(chosenPrime, bob.getCounterpartKey(), true);
+		alice.setFinalKey(alice.generate_exchange(chosenPrime, alice.getCounterpartKey()));
+		bob.setFinalKey(bob.generate_exchange(chosenPrime, bob.getCounterpartKey()));
 
 	//print results of seccond generation
 		std::cout << "Alice's final key:" << std::endl << alice.getFinalKey() << std::endl;
